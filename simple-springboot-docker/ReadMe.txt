@@ -27,6 +27,7 @@ docker images
 kubectl run springbootsimple --image=springbootexample --port 8080 --image-pull-policy=IfNotPresent
 kubectl expose deployment springbootsimple --type=NodePort
 kubectl get services
+minikiube ip
 echo $(minikube service springbootsimple --url)
 curl -v http://192.168.42.216:30199
 
