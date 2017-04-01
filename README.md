@@ -1,1 +1,2 @@
-# POC
+# POC 
+Docker, Minikube, Concurrency
