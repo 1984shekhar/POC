@@ -1,0 +1,7 @@
+<rests xmlns="http://camel.apache.org/schema/spring">
+    <rest>
+        <get uri="/persons/{personId}">
+            <to uri="direct:getPersonId"/>
+        </get>
+    </rest>
+</rests>

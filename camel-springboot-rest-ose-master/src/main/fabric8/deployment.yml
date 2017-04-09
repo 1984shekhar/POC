@@ -1,0 +1,20 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        -
+          resources:
+            requests:
+              cpu: "0.2"
+              memory: 256Mi
+            limits:
+              cpu: "1.0"
+              memory: 256Mi
+          env:
+          - name: CAMEL_FROM
+            value: "direct:getPersonId"
+          - name: CAMEL_LOG_MSG
+            value: "This request is handled by this POD: {{env:HOSTNAME}}"
+          - name: CAMEL_SETBODY
+            value: "Hey ${headers.personId} --> Enjoy your camel microservices | POD : {{env:HOSTNAME}} \n"
