@@ -3,8 +3,8 @@ TThen the following command will package your app and run it on OpenShift:
 
     mvn fabric8:deploy
     oc get pods
-    oc logs <name of pod>
-    oc create route edge example1 --service=spring-boot-cxf-jaxws
+    oc get service
+    oc create route edge example1 --service=<service name>
     route "example1" created
 
     $ oc get routes example1
