@@ -1,0 +1,38 @@
+[cpandey@cpandey spring-boot-camel-config-archetype]$ minishift version
+Minishift version: 1.0.0-beta.5
+
+oc create -f config.yaml
+configmap "special-config" created
+ 
+oc edit configmap special-config
+ 
+ 
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  special.how: very -- > change here
+  special.type: charm
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2017-04-20T08:58:19Z
+  name: special-config
+  namespace: default
+  resourceVersion: "446713"
+  selfLink: /api/v1/namespaces/default/configmaps/special-config
+  uid: 800deef8-25a7-11e7-beb9-00163e740378
+ 
+Deploy the application like as below :
+
+[cpandey@cpandey ~]$ oc get deploymentconfigs
+NAME                       REVISION   DESIRED   CURRENT   TRIGGERED BY
+fis-spring-boot-cxf-ws     1          0         0         config,image(fis-spring-boot-cxf-ws:latest)
+spring-boot-camel-config   3          1         1         config,image(spring-boot-camel-config-archetype:latest)
+[cpandey@cpandey ~]$ 
+ 
+
+oc rollout latest spring-boot-camel-config
+#below is deprecated command
+oc deploy <dc-pod> --latest
