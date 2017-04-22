@@ -1,0 +1,115 @@
+1) minikube start --vm-driver=kvm
+2) Use minikube docker registry
+eval $(minikube docker-env)
+
+3) So firstly we need to create images. Images can be created with:
+A) manual way i.e. using docker commands.
+docker build -t cpandey/springbootexample .
+
+B) Docker plugin in pom.xml or fabric8 plugin.
+
+4) Once created use below command to create a pod and deployment:
+$ kubectl run springbootsimple --image=springboot-docker-example/simple-springboot-docker-plugin --port 8080 --image-pull-policy=IfNotPresent
+
+5) Deployments and Pods can be viewed as
+$ kubectl get deployments
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+springbootsimple   1         1         1            1           11m
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+springbootsimple-2576996935-b5ph0   1/1       Running   0          11m
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ 
+
+
+6)Expose the pod ports to external world so that externally service is accessible. It is also known as creating a service.
+$ kubectl expose deployment springbootsimple --type=NodePort
+
+7)Exposed services can be viewed as:
+$ kubectl get services
+NAME               CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+kubernetes         10.0.0.1     <none>        443/TCP          5h
+springbootsimple   10.0.0.11    <nodes>       8080:32761/TCP   4s
+
+8)$ kubectl describe services springbootsimple
+Name:			springbootsimple
+Namespace:		default
+Labels:			run=springbootsimple
+Selector:		run=springbootsimple
+Type:			NodePort
+IP:			10.0.0.11
+Port:			<unset>	8080/TCP
+NodePort:		<unset>	32761/TCP
+Endpoints:		172.17.0.5:8080
+Session Affinity:	None
+No events.
+
+
+8)How to access this service:
+chandrashekhar@chandrashekhar:~$ minikube ip
+192.168.42.62
+chandrashekhar@chandrashekhar:~$ curl -v http://192.168.42.62:32761
+* Rebuilt URL to: http://192.168.42.62:32761/
+*   Trying 192.168.42.62...
+* Connected to 192.168.42.62 (192.168.42.62) port 32761 (#0)
+> GET / HTTP/1.1
+> Host: 192.168.42.62:32761
+> User-Agent: curl/7.47.0
+> Accept: */*
+> 
+< HTTP/1.1 200 
+< Content-Type: text/plain;charset=UTF-8
+< Content-Length: 12
+< Date: Sat, 22 Apr 2017 19:31:08 GMT
+< 
+* Connection #0 to host 192.168.42.62 left intact
+Hello World!chandrashekhar@chandrashekhar:~$ 
+
+9) How to scale:
+chandrashekhar@chandrashekhar:~$ kubectl scale --replicas=2 deployment/springbootsimple
+deployment "springbootsimple" scaled
+chandrashekhar@chandrashekhar:~$ kubectl get deployments
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+springbootsimple   2         2         2            2           29m
+chandrashekhar@chandrashekhar:~$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+springbootsimple-2576996935-b5ph0   1/1       Running   0          30m
+springbootsimple-2576996935-rqn7c   1/1       Running   0          20s
+chandrashekhar@chandrashekhar:~$ 
+
+8) Replication details can be seen as:
+kubectl describe deployment springbootsimple
+
+9)Simulating a POD crash:
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+springbootsimple-2576996935-b5ph0   1/1       Running   0          49m
+springbootsimple-2576996935-rqn7c   1/1       Running   0          20m
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl delete pod springbootsimple-2576996935-b5ph0
+pod "springbootsimple-2576996935-b5ph0" deleted
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl get pods
+NAME                                READY     STATUS        RESTARTS   AGE
+springbootsimple-2576996935-b5ph0   1/1       Terminating   0          50m
+springbootsimple-2576996935-dnvxs   1/1       Running       0          5s
+springbootsimple-2576996935-rqn7c   1/1       Running       0          20m
+
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+springbootsimple-2576996935-dnvxs   1/1       Running   0          58s
+springbootsimple-2576996935-rqn7c   1/1       Running   0          21m
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker
+
+10) Finally deleting the Deployment:
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl delete deployment springbootsimple
+deployment "springbootsimple" deleted
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl delete service springbootsimple
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl get pods
+NAME                                READY     STATUS        RESTARTS   AGE
+springbootsimple-2576996935-dnvxs   1/1       Terminating   0          13m
+springbootsimple-2576996935-rqn7c   1/1       Terminating   0          34m
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl get deployments
+No resources found.
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ kubectl get pods
+No resources found.
+chandrashekhar@chandrashekhar:~/Development/gitRepo/POC/simple-springboot-docker$ minikube stop
+
+
