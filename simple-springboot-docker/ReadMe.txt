@@ -1,10 +1,12 @@
 How to run it:
 This example is having docker plugin which creates image in docker registry.
-$ mvn package docker:build
-docker run -p 8081:8080 -t springboot-docker-example/simple-springboot-docker-plugin
-minikube ip
-curl -v http://<IP>:8081/
-
+1)mvn package docker:build
+2)kubectl run springbootsimple --image=springbootexample --port 8080 --image-pull-policy=IfNotPresent
+3)kubectl expose deployment springbootsimple --type=NodePort
+4)kubectl get services
+5)minikiube ip
+6)echo $(minikube service springbootsimple --url)
+7)curl -v http://<IP_from_output_5>:<PORT_from_output_4>
 
 
 
