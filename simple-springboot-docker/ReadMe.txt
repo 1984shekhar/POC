@@ -1,8 +1,9 @@
 How to run it:
 This example is having docker plugin which creates image in docker registry.
 $ mvn package docker:build
-docker run -p 8080:8080 -t springboot-docker-example/simple-springboot-docker-plugin
-curl -v http://localhost:8080/
+docker run -p 8081:8080 -t springboot-docker-example/simple-springboot-docker-plugin
+minikube ip
+curl -v http://<IP>:8081/
 
 
 
@@ -22,6 +23,8 @@ minikube start --vm-driver kvm --alsologtostderr
 eval $(minikube docker-env)
 docker images
 docker build -t cpandey/minimal-java .
+mvn clean package
+#copy the jar file from target folder to the existing parent folder location.
 docker build -t springbootexample .
 docker images
 kubectl run springbootsimple --image=springbootexample --port 8080 --image-pull-policy=IfNotPresent
