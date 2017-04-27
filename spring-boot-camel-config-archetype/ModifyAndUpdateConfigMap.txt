@@ -3,7 +3,7 @@ Minishift version: 1.0.0-beta.5
 
 oc create -f config.yaml
 configmap "special-config" created
- 
+oc get configmaps
 oc edit configmap special-config
  
  
@@ -47,5 +47,13 @@ spring-boot-camel-config   10         0         0         config,image(spring-bo
 deploymentconfig "spring-boot-camel-config" scaled
 [cpandey@cpandey ~]$ 
 
+#Viewing logs
+[cpandey@cpandey ~]$ oc get pods
+NAME                                             READY     STATUS      RESTARTS   AGE
+fis-spring-boot-cxf-ws-s2i-1-build               0/1       Completed   0          15d
+fis-spring-boot-cxf-ws-s2i-2-build               0/1       Completed   0          15d
+spring-boot-camel-config-10-s75hx                1/1       Running     0          6m
+spring-boot-camel-config-archetype-s2i-2-build   0/1       Completed   0          7d
+[cpandey@cpandey ~]$ oc logs spring-boot-camel-config-10-s75hx
 
 
