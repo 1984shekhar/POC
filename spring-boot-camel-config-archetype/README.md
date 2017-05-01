@@ -28,7 +28,7 @@ The example can be built with
 
 
 ### Running the example in Minikube
-
+eval $(minikube docker-env)
 
 The following command will create the (**required**) secret:
 
