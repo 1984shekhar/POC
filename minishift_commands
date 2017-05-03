@@ -1,1 +1,4 @@
+#switch to minishift's docker image registry
 eval $(minishift docker-env)
+# go to image shell
+oc rsh <pod>
