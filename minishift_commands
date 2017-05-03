@@ -9,4 +9,5 @@ sh-4.2$ ps -ef|grep java
 #share output of below:
 sh-4.2$ jcmd 1 VM.native_memory summary scale=MB
 
-Output of 'docker stats'.
+docker stats
+docker ps
