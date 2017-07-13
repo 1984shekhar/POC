@@ -19,3 +19,31 @@ How to change context(If one wants to switch from one openshift context to other
 oc config get-contexts
 oc config set-context myproject/192-168-42-3:8443/developer
 oc config use-context myproject/192-168-42-3:8443/developer
+
+For FIS2.0 karaf image:
+A)
+#system user required to execute below.
+oc login -u system:admin
+BASEURL=https://raw.githubusercontent.com/jboss-fuse/application-templates/GA
+oc replace --force -n openshift -f ${BASEURL}/fis-image-streams.json
+BASEURL=https://raw.githubusercontent.com/jboss-fuse/application-templates/GA
+oc replace --force -n openshift -f ${BASEURL}/fis-image-streams.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/karaf2-camel-amq-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/karaf2-camel-log-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/karaf2-camel-rest-sql-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/karaf2-cxf-rest-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-amq-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-config-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-drools-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-infinispan-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-rest-sql-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-teiid-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-camel-xml-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-cxf-jaxrs-template.json
+oc replace --force -n openshift -f ${BASEURL}/quickstarts/spring-boot-cxf-jaxws-template.json
+
+
+
+
+
