@@ -11,3 +11,11 @@ sh-4.2$ jcmd 1 VM.native_memory summary scale=MB
 
 docker stats
 docker ps
+
+
+
+
+How to change context(If one wants to switch from one openshift context to other):
+oc config get-contexts
+oc config set-context myproject/192-168-42-3:8443/developer
+oc config use-context myproject/192-168-42-3:8443/developer
