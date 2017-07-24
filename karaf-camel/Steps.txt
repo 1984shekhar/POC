@@ -1,0 +1,46 @@
+1)Download archetype(sample project) fis-karaf-image maven based project using command:
+mvn org.apache.maven.plugins:maven-archetype-plugin:2.4:generate   -DarchetypeCatalog=https://maven.repository.redhat.com/ga/io/fabric8/archetypes/archetypes-catalog/2.2.195.redhat-000004/archetypes-catalog-2.2.195.redhat-000004-archetype-catalog.xml   -DarchetypeGroupId=org.jboss.fuse.fis.archetypes   -DarchetypeArtifactId=karaf2-camel-log-archetype   -DarchetypeVersion=2.2.195.redhat-000004
+
+
+2) in pom.xml add ssh feature in karaf mave plugin configuration:
+[...]
+          <startupFeatures>
+            [...]
+            <feature>ssh</feature>
+          </startupFeatures>
+[...]
+
+3) export the ssh karaf port (8101) in the application template, the easiest way to do this is by modifing fabric8/deploment.yml to something like this:
+spec:
+  template:
+    spec:
+      containers:
+        -
+          ports:
+            -
+              containerPort: 8101
+              name: "sshd"
+              protocol: "TCP"
+          resources:
+            requests:
+              cpu: "0.2"
+              memory: 128Mi
+            limits:
+              cpu: "1.0"
+              memory: 512Mi
+
+4) now deploy you application on your ocp cluster as usual (probably by oc login and then mvn clean fabic8:deploy)
+
+5) open a port forward from your localhost to the application pod:
+17:39:59 (..st/target/assembly)$ oc get pods
+NAME                   READY     STATUS      RESTARTS   AGE
+fis-test-4-jvv83       1/1       Running     1          2h
+fis-test-s2i-1-build   0/1       Completed   0          2h
+fis-test-s2i-2-build   0/1       Completed   0          2h
+fis-test-s2i-3-build   0/1       Completed   0          2h
+17:40:59 (..st/target/assembly)$ oc port-forward fis-test-4-jvv83 8888:8101
+Forwarding from 127.0.0.1:8888 -> 8101
+Forwarding from [::1]:8888 -> 8101
+
+6) ssh connect to the pod through the opened tunnel with (in this example case):
+ssh -o HostKeyAlgorithms=+ssh-dss -p8888 admin@localhost
