@@ -90,3 +90,44 @@ Sending Response[  0.003] recv DATA frame <length=16, flags=0x01, stream_id=13>
           (last_stream_id=0, error_code=NO_ERROR(0x00), opaque_data(0)=[])
 [cpandey@cpandey camel-undertow]$ 
 
+[csp@dhcppc1 .m2]$ curl --version
+curl 7.53.1 (x86_64-redhat-linux-gnu) libcurl/7.53.1 NSS/3.33 zlib/1.2.11 libidn2/2.0.4 libpsl/0.18.0 (+libidn2/2.0.3) libssh2/1.8.0 nghttp2/1.21.1
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp 
+Features: AsynchDNS IDN IPv6 Largefile GSS-API Kerberos SPNEGO NTLM NTLM_WB SSL libz HTTP2 UnixSockets HTTPS-proxy Metalink PSL 
+[csp@dhcppc1 .m2]$ 
+
+
+[csp@dhcppc1 .m2]$ curl -v --http2 http://localhost:7766/foo/bar
+*   Trying ::1...
+* TCP_NODELAY set
+* connect to ::1 port 7766 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 7766 (#0)
+> GET /foo/bar HTTP/1.1
+> Host: localhost:7766
+> User-Agent: curl/7.53.1
+> Accept: */*
+> Connection: Upgrade, HTTP2-Settings
+> Upgrade: h2c
+> HTTP2-Settings: AAMAAABkAARAAAAAAAIAAAAA
+> 
+< HTTP/1.1 101 Switching Protocols
+< Connection: Upgrade
+< Upgrade: h2c
+< Date: Sun, 10 Dec 2017 06:56:51 GMT
+* Received 101
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+< HTTP/2 200 
+< accept: */*
+< http2-settings: AAMAAABkAARAAAAAAAIAAAAA
+< breadcrumbid: ID-dhcppc1-1512886066149-0-23
+< content-length: 16
+< user-agent: curl/7.53.1
+< date: Sun, 10 Dec 2017 06:56:51 GMT
+< 
+* Connection #0 to host localhost left intact
+Sending Response[csp@dhcppc1 .m2]$ 
