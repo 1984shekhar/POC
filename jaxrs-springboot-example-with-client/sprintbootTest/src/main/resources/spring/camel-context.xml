@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- Define a traditional camel context here -->
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="simple-route">
+            <from id="route-timer" uri="timer:foo?period=30000"/>
+            <log id="_log1" message="hitting service at {{spring-boot-cxf-jaxrs.service.host}}:{{spring-boot-cxf-jaxrs.service.port}}"/>
+            <to id="_to1" uri="http4://{{spring-boot-cxf-jaxrs.service.host}}:{{spring-boot-cxf-jaxrs.service.port}}/services/helloservice/sayHello/FIS"/>
+            <log id="_log2" message="Body received ${body}"/>
+        </route>
+    </camelContext>
+</beans>

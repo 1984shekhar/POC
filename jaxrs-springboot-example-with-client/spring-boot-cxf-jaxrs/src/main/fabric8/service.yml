@@ -1,0 +1,7 @@
+metadata:
+  annotations:
+    api.service.kubernetes.io/path: /services/helloservice/sayHello/
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
