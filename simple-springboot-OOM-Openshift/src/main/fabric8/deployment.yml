@@ -10,3 +10,6 @@ spec:
             limits:
               cpu: "1.0"
               memory: 2048Mi
+          env:
+          - name: JAVA_OPTIONS
+            value: "-Xms1152m -Xmx1152m"
