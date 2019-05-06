@@ -12,4 +12,4 @@ spec:
               memory: 2048Mi
           env:
           - name: JAVA_OPTIONS
-            value: "-Xms1152m -Xmx1152m"
+            value: "-Xms1600m -Xmx1600m -Xloggc:/tmp/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+PrintGCCause -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=5M"
