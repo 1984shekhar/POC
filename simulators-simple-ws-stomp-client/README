@@ -1,0 +1,15 @@
+- broker url
+- user Id and password 
+- message queue name
+
+# Build and execute the build with properties (broker url, user id, password and queue name) specified in pom.xml
+# Note! Queue name, userId and password properties in pom.xml has dummy values that need to be changed into real values before building
+mvn clean verify
+
+# Or run the built jar, with properties (broker url, user id, password and queue name) supplied as arguments
+
+# using secure websockets
+java -DbrokerURL="wss://url:61614/pushapi" -DqueueName="<queue_name>" -DbrokerUserLogin="<user id>" -DbrokerUserPasscode="<password>" -jar target/<jar_name>.jar
+
+# using websockets
+java -DbrokerURL="ws://url:31614/pushapi" -DqueueName="<queue_name>" -DbrokerUserLogin="<user id>" -DbrokerUserPasscode="<password>" -jar target/<jar_name>.jar

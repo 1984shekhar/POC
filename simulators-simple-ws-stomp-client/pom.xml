@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mycompany.ex.test.simulators</groupId>
+    <artifactId>ex-test-simulators-simple-ws-stomp-client</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>Simple STOMP over websockets client</name>
+    <description>A simple client that can be used to connect to a message broker using STOMP protocol over websockets</description>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- maven-compiler-plugin -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        
+        <!--
+             Broker URLs for websockets (ws) and secure websockets (wss) 
+             Set the broker.url property to the corresponding ws or wss property depending 
+             on if you want to use secure ws or not.
+        -->
+        <broker.url>${ws.broker.url}</broker.url>        
+
+        <queue.name>queue_name</queue.name>
+        <broker.user.login>userId</broker.user.login>
+        <broker.user.passcode>password</broker.user.passcode>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.7</version>
+            <scope>compile</scope>
+        </dependency> 
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.tyrus.bundles</groupId>
+            <artifactId>tyrus-standalone-client</artifactId>
+            <version>1.15</version>
+        </dependency>
+    </dependencies>
+   
+    <build>  
+        <plugins>
+            <plugin>  
+                <groupId>org.codehaus.mojo</groupId>  
+                <artifactId>exec-maven-plugin</artifactId>  
+                <version>1.1.1</version>  
+                <executions>  
+                    <execution>  
+                        <phase>verify</phase>  
+                        <goals>  
+                            <goal>java</goal>  
+                        </goals>  
+                        <configuration>  
+                            <mainClass>com.mycompany.test.simulators.stomp.SimpleStompOverWsClient</mainClass>  
+                            <arguments>  
+                            </arguments>
+                           <!--  <systemProperties>
+                                <property>
+                                    <key>brokerURL</key>
+                                    <value>${broker.url}</value>
+                                </property>
+                                <property>
+                                    <key>queueName</key>
+                                    <value>${queue.name}</value>
+                                </property>
+                                <property>
+                                    <key>brokerUserLogin</key>
+                                    <value>${broker.user.login}</value>
+                                </property>
+                                <property>
+                                    <key>brokerUserPasscode</key>
+                                    <value>${broker.user.passcode}</value>
+                                </property>
+                            </systemProperties> -->
+                        </configuration>  
+                    </execution>  
+                </executions>  
+            </plugin>
+            <!-- Build an executable JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <descriptor>src/assembly/assembly.xml</descriptor>
+                            <archive>
+                                <manifest>
+                                    <mainClass>com.mycompany.test.simulators.stomp.SimpleStompOverWsClient</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build> 
+  
+</project>
