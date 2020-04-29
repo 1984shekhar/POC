@@ -4,7 +4,7 @@
 minikube version: v1.9.2
 commit: 93af9c1e43cab9618e301bc9fa720c63d5efa393
 [chandrashekhar@localhost ~]$ minikube start -p testfuse
-[chandrashekhar@localhost ~]$ kubectl config set-context $(kubectl config current-context) --namespace=enmasse-infra
+[chandrashekhar@localhost ~]$ kubectl config set-context $(kubectl config current-context) --namespace=testfuse
 
 ```
 - Deploy
@@ -16,6 +16,10 @@ mvn k8s:deploy
 - Access service externally using loadbalancer service in minikube
 
 ```
+[chandrashekhar@localhost ~]$ kubectl get pods
+NAME                                         READY   STATUS    RESTARTS   AGE
+spring-boot-cxf-jaxrs-xml-6696b75b95-kbhf7   1/1     Running   0          17m
+[chandrashekhar@localhost ~]$ 
 [chandrashekhar@localhost spring-boot-cxf-jaxrs-xml-master]$ kubectl get svc
 NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
 spring-boot-cxf-jaxrs-xml   LoadBalancer   10.107.245.132   <pending>     8080:31158/TCP   77m
