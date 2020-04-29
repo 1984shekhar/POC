@@ -1,8 +1,9 @@
+```
 mvn k8s:build
 mvn k8s:resource
 mvn k8s:deploy
 mvn k8s:undeploy
-
+```
 
 
 = Spring-Boot Camel CXF JAXRS QuickStart
