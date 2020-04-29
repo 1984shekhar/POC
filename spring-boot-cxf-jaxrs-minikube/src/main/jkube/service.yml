@@ -1,0 +1,5 @@
+metadata:
+  annotations:
+    api.service.kubernetes.io/path: /services/helloservice/sayHello/
+spec:
+  type: LoadBalancer
