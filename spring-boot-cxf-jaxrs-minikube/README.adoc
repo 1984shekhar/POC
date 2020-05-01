@@ -10,6 +10,7 @@ commit: 93af9c1e43cab9618e301bc9fa720c63d5efa393
 ```
 - Deploy
 ```
+eval  $(minikube -p restPOC docker-env)
 mvn k8s:build
 mvn k8s:resource
 mvn k8s:deploy
@@ -29,7 +30,7 @@ spring-boot-cxf-jaxrs-xml   LoadBalancer   10.107.245.132   <pending>     8080:3
 - To access this service enable tunnel
 
 ```
-[chandrashekhar@localhost ~]$ minikube tunnel -p testfuse
+[chandrashekhar@localhost ~]$ minikube tunnel -p restPOC
 [chandrashekhar@localhost ~]$ curl -v http://10.107.245.132:8080/services/helloservice/sayHello/FIS
 *   Trying 10.107.245.132:8080...
 * TCP_NODELAY set
