@@ -15,7 +15,7 @@ mvn k8s:build
 mvn k8s:resource
 mvn k8s:deploy
 ```
-- Access service externally using loadbalancer service in minikube
+- Access service externally using loadbalancer service in minikube. Note external-ip is in pending state.
 
 ```
 [chandrashekhar@localhost ~]$ kubectl get pods
@@ -27,11 +27,20 @@ NAME                        TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S
 spring-boot-cxf-jaxrs-xml   LoadBalancer   10.107.245.132   <pending>     8080:31158/TCP   77m
 
 ```
-- To access this service enable tunnel
+- To access this service enable tunnel, run this command from different terminal.
 
 ```
 [chandrashekhar@localhost ~]$ minikube tunnel -p restPOC
-[chandrashekhar@localhost ~]$ curl -v http://10.107.245.132:8080/services/helloservice/sayHello/FIS
+```
+- Check external IP once tunnel is created. Use external-ip to access service.
+
+[chandrashekhar@localhost ~]$ kubectl get service
+NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          AGE
+kubernetes                  ClusterIP      10.96.0.1       <none>          443/TCP          2d3h
+spring-boot-cxf-jaxrs-xml   LoadBalancer   10.107.31.213   10.107.31.213   8080:30206/TCP   2d3h
+[chandrashekhar@localhost ~]$ 
+
+[chandrashekhar@localhost spring-boot-cxf-jaxrs-minikube]$ curl -v http://10.107.245.132:8080/services/helloservice/sayHello/FIS
 *   Trying 10.107.245.132:8080...
 * TCP_NODELAY set
 * Connected to 10.107.245.132 (10.107.245.132) port 8080 (#0)
@@ -46,14 +55,18 @@ spring-boot-cxf-jaxrs-xml   LoadBalancer   10.107.245.132   <pending>     8080:3
 < Content-Type: text/plain
 < Content-Length: 49
 < X-Application-Context: application
-< Date: Wed, 29 Apr 2020 17:44:11 GMT
+< Date: Fri, 01 May 2020 17:59:03 GMT
 < 
 * Connection #0 to host 10.107.245.132 left intact
+Hello FIS, Welcome to CXF RS Spring Boot World!!!
 
 ```
-
 
 - Undeploy
 ```
 mvn k8s:undeploy
+[chandrashekhar@localhost ~]$ kubectl get deployment -n testfuse
+No resources found in testfuse namespace.
+[chandrashekhar@localhost ~]$ kubectl get pods -n testfuse
+No resources found in testfuse namespace.
 ```
