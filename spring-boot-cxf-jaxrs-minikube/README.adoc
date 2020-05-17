@@ -32,8 +32,9 @@ spring-boot-cxf-jaxrs-xml   LoadBalancer   10.107.245.132   <pending>     8080:3
 ```
 [chandrashekhar@localhost ~]$ minikube tunnel -p restPOC
 ```
-- Check external IP once tunnel is created. Use external-ip to access service.
 
+- Check external IP once tunnel is created. Use external-ip to access service.
+```
 [chandrashekhar@localhost ~]$ kubectl get service
 NAME                        TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          AGE
 kubernetes                  ClusterIP      10.96.0.1       <none>          443/TCP          2d3h
@@ -63,6 +64,7 @@ Hello FIS, Welcome to CXF RS Spring Boot World!!!
 ```
 
 - Undeploy
+
 ```
 mvn k8s:undeploy
 [chandrashekhar@localhost ~]$ kubectl get deployment -n testfuse
