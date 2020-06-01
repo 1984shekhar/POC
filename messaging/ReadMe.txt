@@ -1,14 +1,13 @@
-- Generate Camel spring-boot archetype.
+Generate Camel spring-boot archetype.
 ```
 mvn archetype:generate   -DarchetypeGroupId=org.apache.camel.archetypes   -DarchetypeArtifactId=camel-archetype-spring-boot   -DarchetypeVersion=3.3.0
 ```
 
-- RUN IBM MQ docker image.
+RUN IBM MQ docker image.
 ```
 podman run   --env LICENSE=accept   --env MQ_QMGR_NAME=QM1   --publish 1414:1414   --publish 9443:9443   --detach   ibmcom/mq
 ```
-
-- Run spring-boot application
+Run spring-boot application
 
 ```
 [chandrashekhar@localhost messaging]$ mvn spring-boot:run
