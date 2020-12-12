@@ -5,7 +5,7 @@ minikube version: v1.9.2
 commit: 93af9c1e43cab9618e301bc9fa720c63d5efa393
 [chandrashekhar@localhost ~]$ minikube start -p iotpoc
 [chandrashekhar@localhost ~]$ kubectl create ns kafka
-[chandrashekhar@localhost ~]$ kubectl config set-context $(kubectl config current-context) --namespace=testfuse
+[chandrashekhar@localhost ~]$ kubectl config set-context $(kubectl config current-context) --namespace=kafka
 
 ```
 - Deploy
