@@ -16,7 +16,7 @@
     </license>
   </licenses>
   <properties>
-    <camel.version>2.21.0-SNAPSHOT</camel.version>
+    <camel.version>3.0.0-RC2</camel.version>
     <version.maven-bundle-plugin>3.2.0</version.maven-bundle-plugin>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <jboss.fuse.bom.version>6.3.0.redhat-254</jboss.fuse.bom.version>
