@@ -8,7 +8,7 @@ public class TimerRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("timer:foo?period=10000")
         .log("Hello World")
-        .to("http://localhost:8080/hello-resteasy")
+        .to("http://172.30.216.68:8080/hello-resteasy")
         .log("response body: ${body}");
     }
 }
