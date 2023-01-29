@@ -23,17 +23,17 @@ public class SslPokeConnectivity {
       System.exit(1);
     } 
     try {
-      Instant inst1 = Instant.now();
       SSLSocketFactory sSLSocketFactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+      long startTime = System.nanoTime();
       SSLSocket sSLSocket = (SSLSocket)sSLSocketFactory.createSocket(paramArrayOfString[0], Integer.parseInt(paramArrayOfString[1]));
       InputStream inputStream = sSLSocket.getInputStream();
       OutputStream outputStream = sSLSocket.getOutputStream();
       outputStream.write(1);
       while (inputStream.available() > 0)
-        System.out.print(inputStream.read()); 
+        System.out.print(inputStream.read());
+      long stopTime = System.nanoTime(); 
+      System.out.println(stopTime - startTime);
       System.out.println("Successfully connected");
-      Instant inst2 = Instant.now(); 
-      System.out.println("Elapsed Time: "+ Duration.between(inst1, inst2).toString());
       System.exit(0);
       
     } catch (SSLHandshakeException sSLHandshakeException) {
