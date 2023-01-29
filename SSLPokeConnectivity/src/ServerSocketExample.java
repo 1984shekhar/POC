@@ -1,43 +1,30 @@
-
-
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.UnknownHostException;
+import java.io.PrintStream;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 
 public class ServerSocketExample {
-
-	public static void main(String[] args)  {
-		// TODO Auto-generated method stub
-		String host = "0.0.0.0";
-		Integer port = 10025;
-		SSLSocketFactory sslsocketfactory =  (SSLSocketFactory)SSLSocketFactory.getDefault();
-		SSLSocket sslsocket;
+	public static void main(String args[]) {
 		try {
-			sslsocket = (SSLSocket) sslsocketfactory
-			  .createSocket(host, port);
-			InputStream in = sslsocket.getInputStream();
-			OutputStream out = sslsocket.getOutputStream();
+			// Creaet a SSLServersocket
+			SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+			SSLServerSocket sslserversocket = (SSLServerSocket) factory.createServerSocket(10025);
+			System.out.println("SSLSocket connection open");
+			SSLSocket sslsocket = (SSLSocket) sslserversocket.accept();
 
-			out.write(1);
-			while (in.available() > 0) {
-			    System.out.print(in.read());
+			DataInputStream is = new DataInputStream(sslsocket.getInputStream());
+			PrintStream os = new PrintStream(sslsocket.getOutputStream());
+			while (true) {
+
+				String input = is.readUTF();
+
+				os.println(input);
 			}
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
-
-		System.out.println("Secured connection performed successfully");
-
-
 	}
-
 }
