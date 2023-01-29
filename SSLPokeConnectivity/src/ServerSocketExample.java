@@ -9,7 +9,7 @@ import javax.net.ssl.SSLSocket;
 public class ServerSocketExample {
 	public static void main(String args[]) {
 		try {
-			// Creaet a SSLServersocket
+			// Create a SSLServersocket
 			SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 			SSLServerSocket sslserversocket = (SSLServerSocket) factory.createServerSocket(10025);
 			System.out.println("SSLSocket connection open");
