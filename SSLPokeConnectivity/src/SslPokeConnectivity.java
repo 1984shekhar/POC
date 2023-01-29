@@ -32,8 +32,8 @@ public class SslPokeConnectivity {
       while (inputStream.available() > 0)
         System.out.print(inputStream.read());
       long stopTime = System.nanoTime(); 
-      System.out.println(stopTime - startTime);
-      System.out.println("Successfully connected");
+      System.out.print(stopTime - startTime);
+      System.out.println(" executiontime in nanoseconds"+System.lineSeparator()+"Successfully connected");
       System.exit(0);
       
     } catch (SSLHandshakeException sSLHandshakeException) {
